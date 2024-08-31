@@ -1,9 +1,10 @@
 ## RESUMEN DISEÑO DE SISTEMA DE INFORMACIÓN
 
 **Ciclo de vida del Proceso Unificado de Desarrollo (PUD)**
+
 ![picture 1](./images/ciclo_vida_pud.png)
 
-- Pilares del PUD:
+Pilares del PUD:
 1. Dirigido por Casos de Uso
 2. Centrado en la Arquitectura
 3. Proceso Iterativo e Incremental
@@ -35,6 +36,16 @@ El diseño es una etapa/framework dentro del PUD (Proceso Unificado de Desarroll
     - Comunicar las decisiones tomadas al equipo
     - Negociar con los interesados o stakeholders
     - Documentar la arquitectura
+    - Comunica la arquitectura, asegurando que los interesados la comprendan.
+    - Direcciona los requerimientos no funcionales a la arquitectura.
+    - Configura la arquitectura de hardware.
+    - Se asegura que la arquitectura es respetada.
+    - Trabaja con el Administrador del Proyecto (jefe o líder de proyecto), ayudando en la planificación, la  estimación, la distribución de las tareas y la calendarización del proyecto (organiza recursos, cumplir presupuestos, cumplir costos y tiempos).
+El arquitecto es el trabajador en los 3 primeros workflows: requerimientos, análisis y diseño. Es una figura reciente en la 
+ingeniería de software. También suele llamarse líder técnico. Tiene que tener muchas habilidades y capacidades, es un rol 
+que se logra con el tiempo. Suelen ser desarrolladores con un perfil técnico que evolucionan. El rol del arquitecto suele ser 
+colegiado (ejercido por más de una persona) ya que hay que saber un poco de todo. Los arquitectos deben poseer 
+múltiples habilidades de software, ingeniería, tecnología, gestión y comunicaciones
 
 - El diseño de la arquitectura, se encuentra compuesto por tres etapas claves:
     1. **Determinar RNF significativos**
@@ -49,11 +60,26 @@ El diseño es una etapa/framework dentro del PUD (Proceso Unificado de Desarroll
             1. Prueba de conceptos: ¿Puede la arquitectura como fue diseñada ser construida de manera tal que satisfaga los requerimientos?
             2. Prueba de tecnología:  ¿La tecnología elegida (middleware, aplicaciones integradas, librerías, etc.) para implementar la arquitectura se comporta como es esperado?
 
+            ![picture 4](./images/diseño_arquitectura.png)
+
+## Ventajas de diseñar y documentar la arquitectura
+1. Comunicación con los involucrados: la arquitectura es una presentación que sirve para usarse como 
+enfoque para la discusión de un amplio número de participantes.
+2. Análisis del sistema: sirve para aclarar la arquitectura del sistema, para saber si se cumplen los 
+requerimientos críticos.
+3. Reutilización a gran escala: es posible desarrollar arquitecturas de línea de productos donde la misma 
+arquitectura se reutilice mediante una amplia gama de sistemas relacionados.
+
+## Conflictos arquitectónicos
+1. Utilizar componentes de granularidad gruesa mejora la performance pero reduce la mantenibilidad. (gana la performance)
+2. La introducción de datos redundantes mejora la disponibilidad pero hace más difícil la seguridad. (y la performance) Hay más lugares en donde se necesita controlar la seguridad y se tienen que agregar más capas de validación, esto hace que la performance se degrade, siendo más lento el sistema. 
+3. La localización de aspectos de seguridad relacionados usualmente significa más comunicación, por lo tanto degrada la performance.
+
+
 ## Vistas Arquitectónicas
 Las vistas arquitectónicas son formas de modelar la arquitectura del software, dentro del contexto del PUD, se toma como convención el enfoque de vistas arquitectónicas 4 + 1, estas 4 vistas están unidas por otra que es la vista de funcionalidad (casos de uso) la cual contiene los casos de uso significativos para la arquitectura. Se describirán a continuación:
 
 ![picture 3](./images/vistas_pud.png)
-![picture 4]()
 
 1. **Vista de Diseño (lógica)**, describe los elementos significativos de la arquitectura  y las relaciones entre ellos. Esta vista se diseña para el usuario final, es quien utilizará el sistema, para que pueda entender la arquitectura desde un punto de vista más sencillo. Describe cómo será provista la funcionalidad del sistema, qué clases, objetos o componentes voy a utilizar para dar soporte a la funcionalidad.
 2. **Vista de Proceso**, se centra en describir la concurrencia y elementos de comunicación del sistema, se encuentra más relacionado con la performance.
@@ -67,16 +93,22 @@ Las vistas que utilizamos en el práctico son:
 - Vista arquitectónica de diseño - Diagrama de Componentes
 - Vista arquitectónica de despliegue - Diagrama de Despliegue
 
-* Cada vista tiene a su derecha el diagrama UML relacionado
+Cada vista tiene a su derecha el diagrama UML relacionado
 
 ![picture 5](./images/10_vistas.png)
 
-* Cabe aclarar que son 10 vistas en total las que se pueden modelar para la arquitectura, sólo vemos 3 y son estáticas en la parte práctica de la materia, pero en el cuadro de arriba podemos observar las 10, con su parte estática y dinámica. Aclaramos que todas las vistas se construyen en el workflow (WF) de diseño, menos la vista de funcionalidad estática que corresponde al WF de requerimientos y la dinámica que corresponde al WF de análisis.
+Cabe aclarar que son 10 vistas en total las que se pueden modelar para la arquitectura, sólo vemos 3 y son estáticas en la parte práctica de la materia, pero en el cuadro de arriba podemos observar las 10, con su parte estática y dinámica. Aclaramos que todas las vistas se construyen en el workflow (WF) de diseño, menos la vista de funcionalidad estática que corresponde al WF de requerimientos y la dinámica que corresponde al WF de análisis.
+
+Ahora nos preguntamos, ¿hace falta construir todas las vistas?, ¿hacen falta más vistas?
+Las vistas son modelos simplificados para mostrar el contexto. No todos los sistemas requieren todas las vistas. Por ejemplo si tenemos:
+- Un solo procesador: saltear la vista de despliegue.
+- Procesos simples: saltear la vista de procesos.
+- Programas muy pequeños: saltear la vista de implementación
 
 *Sección preguntas:*
 - ¿Por qué es importante diseñar la arquitectura del software?
 - ¿Cómo se documenta la arquitectura del software?
-- ¿En qué momento del ciclo de vida se diseña la arquitectura
+- ¿En qué momento del ciclo de vida se diseña la arquitectura?
 - Grafique y explique el proceso de diseño de la arquitectura del software que propone el autor Ian Gorton.
 - Explique por qué se utilizan vistas para modelar la arquitectura, qué vistas se utilizan y qué diagramas de UML se emplean para modelar en cada vista.
 
