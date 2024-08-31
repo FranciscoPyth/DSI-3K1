@@ -36,7 +36,8 @@ El diseño de la arquitectura, se encuentra compuesto por tres etapas claves:
         - Vistas arquitectónicas, en este punto se deben realizar las vistas de nuestro sistema, son 10 vistas las que se pueden realizar, cada vista representa una forma de modelar la arquitectura, la sumatoria de todas nos permitirán tener un entendimiento mucho mejor de la arquitectura, esta parte debe ir en el documento  de arquitectura.
     3. **Validar la arquitectura**
         - Escenarios de prueba, son artefactos simples, que se utilizan para validar algún comportamiento de la arquitectura frente a algún evento/estímulo particular que pueden tener un gran impacto en la misma.
-            Ejemplos:
+        - Ejemplos:
+
             ![picture 1](./images/examples_escenarios.png)
 
         - Prototipos, 
