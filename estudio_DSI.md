@@ -1,5 +1,8 @@
 ## RESUMEN DISEÑO DE SISTEMA DE INFORMACIÓN
 
+**Ciclo de vida del Proceso Unificado de Desarrollo (PUD)**
+![picture](./images/PUD_1.png)
+
 ## ¿Qué es el diseño?
 --> El diseño es una etapa/framework dentro del PUD (Proceso Unificado de Desarrollo) que se encarga de recibir los RF (Requerimientos Funcionales) trabajados en la etapa/framework anterior referido al análisis, en donde estos RF fueron trabajamos sin tener en cuenta ninguna limitación a nivel de software/hardware o regla de negocio, es decir, en el análisis se asume una topología interna perfecta y neutra (la cual no le da importancia a los RNF). En el diseño, tenemos que encargarnos de resolver los RNF del sistema, llevando el modelo lógico de la etapa de análisis a un modelo físico que empieza a tener en cuenta las restricciones de negocio. 
 
@@ -31,13 +34,18 @@ Cada una de estas etapas tiene un rol asociado, que en este caso es el arquitect
 El diseño de la arquitectura, se encuentra compuesto por tres etapas claves:
     1. **Determinar RNF significativos**
     2. **Diseñar la arquitectura**
-        - Elegir el framework arquitectónico, básicamente es elegir los patrones arquitectónicos que nos seguirán a lo largo de todo el diseño, es lo que identificará a nuestro sistema a nivel global/general. Podemos decir como ejemplo, patrón Broker, Publish and Suscribe, Layered, Messaging, Hexagonal, las cuales explicaremos más adelante en la sección de ~Patrones y estilos arquitectónicos~
+        - Elegir el framework arquitectónico, básicamente es elegir los patrones arquitectónicos que nos seguirán a lo largo de todo el diseño, es lo que identificará a nuestro sistema a nivel global/general. Podemos decir como ejemplo, patrón Broker, Publish and Suscribe, Layered, Messaging, Hexagonal, las cuales explicaremos más adelante en la sección de *Patrones y estilos arquitectónicos*
         - Distribuir los componentes, en esta etapa el arquitecto, debe encargarse de dividir las responsabilidades del sistema en componentes, buscando agrupar componentes en subsistemas muy cohesivos, para que resuelvan una tarea específica, también se debe buscar un bajo acoplamiento entre componentes (para evitar que se rompa todo).
         - Vistas arquitectónicas, en este punto se deben realizar las vistas de nuestro sistema, son 10 vistas las que se pueden realizar, cada vista representa una forma de modelar la arquitectura, la sumatoria de todas nos permitirán tener un entendimiento mucho mejor de la arquitectura, esta parte debe ir en el documento  de arquitectura.
     3. **Validar la arquitectura**
         - Escenarios de prueba, son artefactos simples, que se utilizan para validar algún comportamiento de la arquitectura frente a algún evento/estímulo particular que pueden tener un gran impacto en la misma.
         - Ejemplos:
+        ![picture 1](./images/examples_escenarios.png)
+        - Prototipos, muchas veces sucede, que los escenarios se tornan un poco más complejos, por lo tanto, se requiere la realización de un mini prototipo, para poder validar el comportamiento de la arquitectura, se desarrolla una aplicación pequeña (una versión mínima) encargada de realizar un aspectos particular de nuestro sistema. Estos prototipos nos deben ayudar a responder alguna de estas dos preguntas:
+            1. Prueba de conceptos: ¿Puede la arquitectura como fue diseñada ser construida de manera tal que satisfaga los requerimientos?
+            2. Prueba de tecnología:  ¿La tecnología elegida (middleware, aplicaciones integradas, librerías, etc.) para implementar la arquitectura se comporta como es esperado?
 
-            ![picture 1](./images/examples_escenarios.png)
-
-        - Prototipos, 
+*Sección preguntas:*
+- ¿Por qué es importante diseñar la arquitectura del software?
+- ¿Cómo se documenta la arquitectura del software?
+- ¿En qué momento del ciclo de vida se diseña la arquitectura
