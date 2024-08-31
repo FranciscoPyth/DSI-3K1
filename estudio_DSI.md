@@ -1,7 +1,7 @@
 ## RESUMEN DISEÑO DE SISTEMA DE INFORMACIÓN
 
 **Ciclo de vida del Proceso Unificado de Desarrollo (PUD)**
-![picture 1](./images/PUD_1.png)
+![picture 2](./images/PUD_1.png)
 
 ## ¿Qué es el diseño?
 El diseño es una etapa/framework dentro del PUD (Proceso Unificado de Desarrollo) que se encarga de recibir los RF (Requerimientos Funcionales) trabajados en la etapa/framework anterior referido al análisis, en donde estos RF fueron trabajamos sin tener en cuenta ninguna limitación a nivel de software/hardware o regla de negocio, es decir, en el análisis se asume una topología interna perfecta y neutra (la cual no le da importancia a los RNF). En el diseño, tenemos que encargarnos de resolver los RNF del sistema, llevando el modelo lógico de la etapa de análisis a un modelo físico que empieza a tener en cuenta las restricciones de negocio. 
