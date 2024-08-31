@@ -1,14 +1,19 @@
 ## RESUMEN DISEÑO DE SISTEMA DE INFORMACIÓN
 
 **Ciclo de vida del Proceso Unificado de Desarrollo (PUD)**
-![picture 2](./images/PUD_1.png)
+![picture 1](./images/ciclo_vida_pud.png)
+
+- Pilares del PUD:
+1. Dirigido por Casos de Uso
+2. Centrado en la Arquitectura
+3. Proceso Iterativo e Incremental
 
 ## ¿Qué es el diseño?
 El diseño es una etapa/framework dentro del PUD (Proceso Unificado de Desarrollo) que se encarga de recibir los RF (Requerimientos Funcionales) trabajados en la etapa/framework anterior referido al análisis, en donde estos RF fueron trabajamos sin tener en cuenta ninguna limitación a nivel de software/hardware o regla de negocio, es decir, en el análisis se asume una topología interna perfecta y neutra (la cual no le da importancia a los RNF). En el diseño, tenemos que encargarnos de resolver los RNF del sistema, llevando el modelo lógico de la etapa de análisis a un modelo físico que empieza a tener en cuenta las restricciones de negocio. 
 
 ## ¿Qué se puede diseñar?
 1. **Arquitectura**:
-    - Es la más relevante de todas, ya que marca los lineamientos y la estructura general que seguirá nuestro sistema. El diseño de la arquitectura es un conjunto de decisiones significativas que se toman para resolver los RNF (Requerimientos No Funcionales) afectando lo menos posible a los RF que llegan como entrada del framework de análisis.
+    - Es la más relevante de todas, ya que marca los lineamientos y la estructura general que seguirá nuestro sistema. El diseño de la arquitectura es un **proceso** que conlleva un conjunto de decisiones significativas que se toman para resolver los RNF (Requerimientos No Funcionales) afectando lo menos posible a los RF que llegan como entrada del framework de análisis.
 2. **Procesos**
     - Se relaciona con patrones de diseño, para este momento no se amplía la información de este punto.
 3. **Experiencia de usuario**
@@ -26,7 +31,7 @@ El diseño es una etapa/framework dentro del PUD (Proceso Unificado de Desarroll
         Ejemplos: Sistema en batch o lotes son las elecciones, que se recauda toda la información en papeles y luego se ingresan esos datos en el sistema, el censo es otro ejemplo, que también aplica algo más híbrido, ya que se podía censar desde nuestras propias casas, sin necesidad que pase una persona a realizar el censo.
 
 ## Profundizamos un poco en el diseño de la arquitectura...
-- Cada una de estas etapas tiene un rol asociado, que en este caso es el arquitecto de software, quien se encarga de desarrollar cada etapa y tiene asociadas otras responsabilidades para su rol:
+- Cada una de estas etapas tiene un rol asociado, que en este caso es el arquitecto de software, quien se encarga de desarrollar cada etapa y tiene asociadas responsabilidades:
     - Comunicar las decisiones tomadas al equipo
     - Negociar con los interesados o stakeholders
     - Documentar la arquitectura
@@ -35,17 +40,48 @@ El diseño es una etapa/framework dentro del PUD (Proceso Unificado de Desarroll
     1. **Determinar RNF significativos**
     2. **Diseñar la arquitectura**
         - Elegir el framework arquitectónico, básicamente es elegir los patrones arquitectónicos que nos seguirán a lo largo de todo el diseño, es lo que identificará a nuestro sistema a nivel global/general. Podemos decir como ejemplo, patrón Broker, Publish and Suscribe, Layered, Messaging, Hexagonal, las cuales explicaremos más adelante en la sección de *Patrones y estilos arquitectónicos*
-        - Distribuir los componentes, en esta etapa el arquitecto, debe encargarse de dividir las responsabilidades del sistema en componentes, buscando agrupar componentes en subsistemas muy cohesivos, para que resuelvan una tarea específica, también se debe buscar un bajo acoplamiento entre componentes (para evitar que se rompa todo).
-        - Vistas arquitectónicas, en este punto se deben realizar las vistas de nuestro sistema, son 10 vistas las que se pueden realizar, cada vista representa una forma de modelar la arquitectura, la sumatoria de todas nos permitirán tener un entendimiento mucho mejor de la arquitectura, esta parte debe ir en el documento  de arquitectura.
+        - Distribuir los componentes, en esta etapa el arquitecto, debe encargarse de dividir las responsabilidades del sistema en componentes, buscando agrupar componentes en subsistemas muy cohesivos, para que resuelvan una tarea específica, también se debe buscar un bajo acoplamiento entre componentes (para evitar que se rompa todo). De aquí salen las vistas arquitectónicas, son 10 vistas las que se pueden realizar, cada vista representa una forma de modelar la arquitectura, la sumatoria de todas nos permitirán tener un entendimiento mucho mejor de la arquitectura, esta parte debe ir en el documento de arquitectura.
     3. **Validar la arquitectura**
         - Escenarios de prueba, son artefactos simples, que se utilizan para validar algún comportamiento de la arquitectura frente a algún evento/estímulo particular que pueden tener un gran impacto en la misma.
         - Ejemplos:
-        ![picture 1](./images/PUD_1.png)
+        ![picture 2](./images/examples_escenarios.png)
         - Prototipos, muchas veces sucede, que los escenarios se tornan un poco más complejos, por lo tanto, se requiere la realización de un mini prototipo, para poder validar el comportamiento de la arquitectura, se desarrolla una aplicación pequeña (una versión mínima) encargada de realizar un aspectos particular de nuestro sistema. Estos prototipos nos deben ayudar a responder alguna de estas dos preguntas:
             1. Prueba de conceptos: ¿Puede la arquitectura como fue diseñada ser construida de manera tal que satisfaga los requerimientos?
             2. Prueba de tecnología:  ¿La tecnología elegida (middleware, aplicaciones integradas, librerías, etc.) para implementar la arquitectura se comporta como es esperado?
+
+## Vistas Arquitectónicas
+Las vistas arquitectónicas son formas de modelar la arquitectura del software, dentro del contexto del PUD, se toma como convención el enfoque de vistas arquitectónicas 4 + 1, estas 4 vistas están unidas por otra que es la vista de funcionalidad (casos de uso) la cual contiene los casos de uso significativos para la arquitectura. Se describirán a continuación:
+
+![picture 3](./images/vistas_pud.png)
+![picture 4]()
+
+1. **Vista de Diseño (lógica)**, describe los elementos significativos de la arquitectura  y las relaciones entre ellos. Esta vista se diseña para el usuario final, es quien utilizará el sistema, para que pueda entender la arquitectura desde un punto de vista más sencillo. Describe cómo será provista la funcionalidad del sistema, qué clases, objetos o componentes voy a utilizar para dar soporte a la funcionalidad.
+2. **Vista de Proceso**, se centra en describir la concurrencia y elementos de comunicación del sistema, se encuentra más relacionado con la performance.
+3. **Vista de Despliegue (física)**, esta vista describe cómo los principales procesos y componentes se asignan al hardware de 
+las aplicaciones. Muestra cómo el software será alojado en los diferentes componentes de hardware. Podría mostrar, por ejemplo, cómo se distribuye la base de datos y los servidores web de una aplicación en varias máquinas servidor.
+4. **Vista Implementación (componentes)**, : Esto captura la organización interna de los componentes de código, normalmente cuando se mantienen en un entorno de desarrollo o herramienta de gestión de la configuración. Describe también las dependencias de los módulos de implementación (código fuente, bibliotecas, componentes de terceros).
+5. **+1 Vista funcionalidad o de escenarios**, representa los casos de uso significativos para la arquitectura. 
+
+Las vistas que utilizamos en el práctico son:
+- Vista arquitectónica de funcionalidad - Diagrama de Casos de Uso
+- Vista arquitectónica de diseño - Diagrama de Componentes
+- Vista arquitectónica de despliegue - Diagrama de Despliegue
+
+* Cada vista tiene a su derecha el diagrama UML relacionado
+
+![picture 5](./images/10_vistas.png)
+
+* Cabe aclarar que son 10 vistas en total las que se pueden modelar para la arquitectura, sólo vemos 3 y son estáticas en la parte práctica de la materia, pero en el cuadro de arriba podemos observar las 10, con su parte estática y dinámica. Aclaramos que todas las vistas se construyen en el workflow (WF) de diseño, menos la vista de funcionalidad estática que corresponde al WF de requerimientos y la dinámica que corresponde al WF de análisis.
 
 *Sección preguntas:*
 - ¿Por qué es importante diseñar la arquitectura del software?
 - ¿Cómo se documenta la arquitectura del software?
 - ¿En qué momento del ciclo de vida se diseña la arquitectura
+- Grafique y explique el proceso de diseño de la arquitectura del software que propone el autor Ian Gorton.
+- Explique por qué se utilizan vistas para modelar la arquitectura, qué vistas se utilizan y qué diagramas de UML se emplean para modelar en cada vista.
+
+
+## Patrones Arquitectónicos
+
+*Sección preguntas:*
+- Elija tres patrones arquitectónicos asociados a la vista de ejecución (runtime), y para cada uno de ellos explique su propósito y elija un caso para ejemplificar donde se justifica su aplicación.
