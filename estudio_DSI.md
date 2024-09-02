@@ -66,12 +66,19 @@ múltiples habilidades de software, ingeniería, tecnología, gestión y comunic
 ![picture 7](./images/arq_en_contexto.png)
 ![picture 8](./images/dominio_arq.png)
 
-## RNF Críticos:
+## RNF Críticos (atributos de calidad observables):
 - Performance
 - Seguridad
-- Escalabilidad
-- Mantenibilidad
+- Usabilidad
+- Funcionalidad
 - Disponibilidad
+
+## No observables:
+- Modificabilidad
+- Portabilidad
+- Reusabilidad
+- Testeabilidad
+- Escalabilidad
 
 Utilizar componentes de granularidad alta, mejora la performance, pero reduce la mantenibilidad del sistema. Por otro lado la introducción de datoa redundantes mejora la disponibilidad pero hace la seguridad más dificil. Y por último, la localización de aspectos de seguridad, significa más comunicación y un deterioro de la performance.
 
@@ -144,7 +151,61 @@ Las vistas son modelos simplificados para mostrar el contexto. No todos los sist
 - Explique por qué se utilizan vistas para modelar la arquitectura, qué vistas se utilizan y qué diagramas de UML se emplean para modelar en cada vista.
 
 
+## Tipos de sistemas
+- Personales
+- Distribuidos --> Son los que ameritan nuestro estudio
+- Embebidos
+
+## Sistemas distribuidos
+Este tipo de sistemas, se caracteriza por tener un procesamiento distribuido en varias computadoras/servidores de la información. Este sistema se ejecuta gracias a la coparticipación de muchas computadoras, que permiten que el usuario vea al final, un sistema coherente y unido, sin saber ni tener en cuenta que el procesamiento se ejecuta en varios lugares. Estos sistemas deben ser transparentes, refiere a que el sistema se vea como uno sólo (un poco lo que veníamos hablando anteriormente), en la práctica es imposible debido a demoras en la red, fallas en los nodos/servers, etc.
+
+Características:
+
+Desventajas:
+
+Ataques a defender:
+
+Falacias:
+
 ## Patrones Arquitectónicos
+
+1. Arquitectura monolítica
+
+2. Layered
+
+![picture 9](./images/arq_en_capas.png)
+
+- Este patrón permite dar una estructura (no es dinámico) de nuestro sistema consta de dividir los componentes en capas, buscando una alta cohesión y bajo acoplamiento de las mismas, una características que disminuye su acoplamiento, es que las capas sólo puede comunicarse entre las capas adyacentes, es decir, la comunicación que puedo hacer entre la capa de presentación y de persistencia, no puede ser directa, sino que debo recorrer primero la de logica de negocio, para que luego esta obtenga lo que necesito y se lo disponibilice a la de presentación. La separación en capas busca cumplir con el principio de separación de preocupación o más bien conocido "no hables con extraños", de tal forma que cada capa se encarga de una tarea específica.
+A este patrón también lo identifica algo muy importante, que es el aislamiento de capas, esto refiere a que al realizar un cambio, este cambio, no debería afectar a la otras capas de nuestro sistema
+1. **Capa de presentación**: Es la encargada de crear la vista o interface gráfica de usuario, puede ser una aplicación web, una app de escritorio o una app móvil. Generalmente escrito en HTML, Javascript, CSS, Android/Swift, etc.
+2. **Capa de lógica de negocio**: Esta capa contiene la lógica de negocio y las operaciones de alto nivel que la capa de presentación puede utilizar. Generalmente escrito en Java, Python, .NET, NodeJS, etc.
+3. **Capa de acceso a datos**: Esta capa corresponde a la capa donde están los datos, por ejemplo, MySQL, Oracle, PostgreSQL, MongoDB, etc
+
+Características:
+- Las capas de la aplicación son totalmente independientes de las demás, con la excepción de la capa que está inmediatamente debajo.
+- Deben de existir al menos 3 capas para considerar una aplicación por capas.
+- Toda la comunicación se hace siempre de forma descendente, pasando desde las capas superiores a las más inferiores
+- Aislamiento de capas
+- Principio de separación de responsabilidad
+
+Ventajas y desventajas:
+Los sistemas que siguen este patrón arquitectónico suelen ser **fáciles de desarrollar**, ya que es una arquitectura muy conocida y difundida, lo cual hace que la curva de desarrollo y aprendizaje de la misma, sea menor, a una de tipo microservicios, también son **fáciles de testear** ya que se pueden probar las capas de forma independiente, sin necesidad de correr todo el sistema para probarlo, es tan simple como ejecutar y probar la capa interesada. Por otro lado una ventaja considerable, es el bajo acoplamiento que aporta esta arquitectura, ya que sigue el principio de 'no hables con extraños' o **'separación de responsabilidades'** que indica que cada capa se comunica sólo con la adyacente y se encarga de realizar una tarea bien definida y particular, el gran desafío también se encuentra en lograr separar de forma correcta e intentando hacer lo más cohesivo posible las capas. Implementa **seguridad**, al separarse por capas y tener una forma particular de comunicarse entre ellas, se implementa indirectamente seguridad, por ejemplo, la capa de presentación no puede comunicarse directamente con la capa de datos sin pasar antes por las otras dos que tiene debajo.
+Algunas de las contras que presenta, es al momento de la ejecución del sistema, este puedo tener problemas relacionados a la **performance y disponibilidad** ante la caída o la falla de conexión en alguno de los servidores o la red de wifi o conexión utilizada, recordemos que cada capa va a deployarse en un servidor particular, y estos servidores a su vez, se comunican mediante peticiones HTTP y de red para obtener la información solicitada entre cada capa. El **despliegue** de la aplicación se torna un tanto complicado, ya que se requiere deployar de abajo hacia arriba, esto se debe a que cada capa le solicita información a la capa adyacente que tiene debajo de ella, esto también provoca que **no sea tolerante a los fallos**, ya que si falla una capa inferior, todas las superiores también van a a fallar, debido a que dependen de los servicios que la capa de abajo les provee. Y por último la **escalabilidad** también es un factor que juega en contra, ya que a medida que crece la aplicación, tiende a ser más monolítica y ser todo un bloque de procesamiento, que si se cae una parte, se cae todo el procesamiento y por consecuencia el sistema.
+
+![picture 10](./images/interaction_layered.png)
 
 *Sección preguntas:*
 - Elija tres patrones arquitectónicos asociados a la vista de ejecución (runtime), y para cada uno de ellos explique su propósito y elija un caso para ejemplificar donde se justifica su aplicación.
+- Realizar para cada patrón arquitectónico, un cuadro con las sigientes filas: Descripción - Cuando se usa - Ventajas - Desventajas
+
+## Arquitectura Microservicios vs Monolíticos
+
+
+## Patrones de microservicios
+
+1. Descomposición del problema en dominios
+2. Una base de datos por cada Servicio
+3. API Gateway
+4. 
+5. 
+6. 
