@@ -62,6 +62,37 @@ múltiples habilidades de software, ingeniería, tecnología, gestión y comunic
 
             ![picture 4](./images/diseño_arquitectura.png)
 
+## La arquitectura en contexto
+![picture 7](./images/arq_en_contexto.png)
+![picture 8](./images/dominio_arq.png)
+
+## RNF Críticos:
+- Performance
+- Seguridad
+- Escalabilidad
+- Mantenibilidad
+- Disponibilidad
+
+Utilizar componentes de granularidad alta, mejora la performance, pero reduce la mantenibilidad del sistema. Por otro lado la introducción de datoa redundantes mejora la disponibilidad pero hace la seguridad más dificil. Y por último, la localización de aspectos de seguridad, significa más comunicación y un deterioro de la performance.
+
+## Razones por la cual documentar la arquitectura
+- Dejar plasmado decisiones importantes
+- Justificación de framework y patrones utilizados
+- Cómo se da respuesta y prioridad a los RNF elegidos
+- Reutilización a gran escala
+- Ver con claridad qué prioridad tienen los RNF
+
+## Problemas al documentar...
+- No existe un estándar de documentación de arquitectura universalmente aceptado.
+- Una arquitectura puede ser compleja y documentarla de forma comprensible es lenta y no trivial.
+
+## Qué documentar?
+
+Necesidades de las partes interesadas de la aplicación: La documentación de la arquitectura sirve para comunicaciones importantes. En un equipo pequeño, la comunicación interpersonal a menudo es buena, por lo que la documentación puede ser mínima.
+
+La documentación requiere tiempo para desarrollarse y cuesta dinero. Por tanto, es importante pensar detenidamente qué documentación será más útil dentro del contexto del proyecto, de producir y mantener esto como documentos de referencia clave para el proyecto.
+
+
 ## Ventajas de diseñar y documentar la arquitectura
 1. Comunicación con los involucrados: la arquitectura es una presentación que sirve para usarse como 
 enfoque para la discusión de un amplio número de participantes.
