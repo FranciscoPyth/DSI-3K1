@@ -160,22 +160,45 @@ Las vistas son modelos simplificados para mostrar el contexto. No todos los sist
 Este tipo de sistemas, se caracteriza por tener un procesamiento distribuido en varias computadoras/servidores de la información. Este sistema se ejecuta gracias a la coparticipación de muchas computadoras, que permiten que el usuario vea al final, un sistema coherente y unido, sin saber ni tener en cuenta que el procesamiento se ejecuta en varios lugares. Estos sistemas deben ser transparentes, refiere a que el sistema se vea como uno sólo (un poco lo que veníamos hablando anteriormente), en la práctica es imposible debido a demoras en la red, fallas en los nodos/servers, etc.
 
 Características:
+- **Compartición de recursos**, se relaciona con la capacidad de estos sistemas a compartir hardware y software para brindar un mejor procesamiento y utilidad del sistema. Como ejemplo, impresoras, discos, etc.
+- **Apertura**, son abiertos, diseñados con protocolos estándares para lograr la comunicación entre ellos. Facilita la integracion entre diferentes equipos.
+- **Concurrencia**, beneficia a la concurrencia de procesos, es decir, pueden ejecutarse varios procesos en el mismo momento.
+- **Tolerancia a fallas**, al tener varias computadoras y dispositivos que benefician el procesamiento, tendremos un mejor soporte ante fallas en algún equipo en particular. Una pérdida completa de servicio, sólo ocurriría ante una falla o caída de la red que conecta a todos los equipos.
+- **Escalabilidad**, este se relaciona a la capacidad que tienen estos sistemas de agregar dispositivos para mejorar y ampliar el nivel de procesamiento, cubriendo más demandas que pide el sistema. 
 
 Desventajas:
+- Complejidad, son más difíciles de probar y de comprender. Contiene muchos elementos que pueden fallar y los cuales es necesario conocer.
+- Manejabilidad, ante un nivel de escalamiento de la aplicación mayor, se dificulta el manejo de cada servicio/computadora que se encuentra conectada, destacando que cada máquina puede tener distintos sistemas operativos y estar implementada con diferentes tecnologías.
+- Seguridad, se puede acceder desde varias computadoras a un mismo sistema, dando vulnerabilidad y peligro por elementos que pueden ser atacados si no se siguen buenas prácticas de seguridad para el sistema. 
+- Impredecibilidad, tienen una respuesta impredecible ante alguna solicitud, ya que pueden ener demoras de red, que un equipo se encuentre fallando, entre otras cosas que relentizan este proceso.
 
 Ataques a defender:
+- Intercepción
+- Interrupción
+- Modificación
+- Fabricación
 
 Falacias:
+1. La red está disponible
+2. La latencia es cero
+3. El ancho de banda es infinito
+4. La red es segura
+5. La topología nunca cambia
+6. Hay un único administrador
+7. El costo de transporte es cero
+8. La red es homogénea
 
-## Patrones Arquitectónicos
+## Patrones/Estilos Arquitectónicos
 
-1. Arquitectura monolítica
+1. ***Arquitectura monolítica***
 
-2. Layered
+2. ***Arquitectura de microservicios***
+
+2. ***Arquitectura Layered o Estratificada***
 
 ![picture 9](./images/arq_en_capas.png)
 
-- Este patrón permite dar una estructura (no es dinámico) de nuestro sistema consta de dividir los componentes en capas, buscando una alta cohesión y bajo acoplamiento de las mismas, una características que disminuye su acoplamiento, es que las capas sólo puede comunicarse entre las capas adyacentes, es decir, la comunicación que puedo hacer entre la capa de presentación y de persistencia, no puede ser directa, sino que debo recorrer primero la de logica de negocio, para que luego esta obtenga lo que necesito y se lo disponibilice a la de presentación. La separación en capas busca cumplir con el principio de separación de preocupación o más bien conocido "no hables con extraños", de tal forma que cada capa se encarga de una tarea específica.
+- Este patrón permite dar una estructura (no es dinámico) de nuestro sistema, consta en dividir los componentes en capas, buscando una alta cohesión y bajo acoplamiento de las mismas, una características que disminuye su acoplamiento, es que las capas sólo puede comunicarse entre las capas adyacentes, es decir, la comunicación que puedo hacer entre la capa de presentación y de persistencia, no puede ser directa, sino que debo recorrer primero la de logica de negocio, para que luego esta obtenga lo que necesito y se lo disponibilice a la de presentación. La separación en capas busca cumplir con el principio de separación de preocupación o más bien conocido "no hables con extraños"(*SoC: Separation of Concerns*), de tal forma que cada capa se encarga de una tarea específica.
 A este patrón también lo identifica algo muy importante, que es el aislamiento de capas, esto refiere a que al realizar un cambio, este cambio, no debería afectar a la otras capas de nuestro sistema
 1. **Capa de presentación**: Es la encargada de crear la vista o interface gráfica de usuario, puede ser una aplicación web, una app de escritorio o una app móvil. Generalmente escrito en HTML, Javascript, CSS, Android/Swift, etc.
 2. **Capa de lógica de negocio**: Esta capa contiene la lógica de negocio y las operaciones de alto nivel que la capa de presentación puede utilizar. Generalmente escrito en Java, Python, .NET, NodeJS, etc.
@@ -193,6 +216,46 @@ Los sistemas que siguen este patrón arquitectónico suelen ser **fáciles de de
 Algunas de las contras que presenta, es al momento de la ejecución del sistema, este puedo tener problemas relacionados a la **performance y disponibilidad** ante la caída o la falla de conexión en alguno de los servidores o la red de wifi o conexión utilizada, recordemos que cada capa va a deployarse en un servidor particular, y estos servidores a su vez, se comunican mediante peticiones HTTP y de red para obtener la información solicitada entre cada capa. El **despliegue** de la aplicación se torna un tanto complicado, ya que se requiere deployar de abajo hacia arriba, esto se debe a que cada capa le solicita información a la capa adyacente que tiene debajo de ella, esto también provoca que **no sea tolerante a los fallos**, ya que si falla una capa inferior, todas las superiores también van a a fallar, debido a que dependen de los servicios que la capa de abajo les provee. Y por último la **escalabilidad** también es un factor que juega en contra, ya que a medida que crece la aplicación, tiende a ser más monolítica y ser todo un bloque de procesamiento, que si se cae una parte, se cae todo el procesamiento y por consecuencia el sistema.
 
 ![picture 10](./images/interaction_layered.png)
+![picture 12](./images/interaction_layered.png)
+
+Ejemplos de variantes de Layered:
+![picture 13](./images/variants_of_layered.png)
+
+3. ***Arquitectura Hexagonal***
+
+![picture 11](./images/hexagonal_architecture.png)
+
+Esta arquitectura, también llamada Arq. de puertos y adaptadores, brinda una estructura en capas como la Arq. Layered sólo que implementa un nuevo objetivo, el cual es separar el core de la aplicación de todos los servicios de terceros a los cuales se comunica y de todos aquellos usuarios que consumen esta aplicación. Esta arquitectura propone que los accesos se realicen mediante puertos, estos puertos serán componentes a desarrollar de nuestro sistema, mediante el cual, puedan conectarse adaptadores y consumir la información o datos que proveerán los puertos. 
+Como se observa en la ilustración, podemos ver el hexagono, en el centro nuestro core (logica de negocio + aplicacion) y fuera de la última barrera del hexágono se encuentran los servidores/equipos/usuarios/APIs externos que solicitarán y consumirán información de nuestra aplicación, a su vez podemos observa como también desde el core se solicita información a la base de datos y otros servicios que nos brindan soporte para cumplir con el proceso de nuestra aplicación. Los agentes que se encuentran del lado izquierdo se denominan **Driving Side (Lado de conducción)**, son aquellos agentes externos a nuestro sistema, que consumen de los servicios que ofrecemos y los del derecho, **Driven Side (Lado conducido)**, son aquellos que dan soporte a nuestro proceso de negocio, necesitamos de ellos para lograr dar respuesta a los Driving Side, las BD son ejemplos claros, conexiones a APIs externas para efectuar el pago también es un agente del lado conducido. Y por ejemplo un adaptador de conducción (Driving Side) podría ser un controlador que es el que toma la entrada (del usuario) y la pasa a la Aplicación a través de un Puerto. 
+La idea es que cualquier tipo de elemento/agente pueda interactuar con el sistema, por medio de adaptadores que se comunican directamente con los puertos ofrecidos por nuestra aplicación. 
+
+Actores principales = Driving Side (Lado de conducción)
+Actores secundarios = Driven Side (Lado conducido)
+
+Existe en este estilo arquitectónico, un principio de diseño aplicado, denominado **Depency Invertion** (incluído dentro de los principios SOLID), el cual está vinculado con la relación inversa que se implementa a nivel de runtime, entre la capa de datos con el componente de persistencia, es decir, la instancia de un objeto 'persistencia' es la encargada de enviarle la información al pedido para que pueda utilizar la info, pero esto lo logra realizar gracias a la llamada de un controlador, esto se hace así, ya que si pedido (por poner un ejemplo) solicitara o instanciara un objeto de persistencia, se generaría un alto acomplamiento en el código y una poca coehsión, ya que al cambiar el componente de persistencia, también probablemente se deba modificar algo del objeto 'pedido'.
+
+**Beneficios**
+- Acoplamiento bajo al desacoplar el núcleo de los sistemas externos y sus detalles técnicos.
+- Alta cohesión al manejar las inquietudes técnicas con los adaptadores y mantener el enfoque en la lógica de negocio y de aplicaciones dentro del núcleo.
+- Capacidad de prueba mejorada.
+- Mantenimiento más fácil.
+- Mejor modelado de dominio.
+- Escalabilidad, al permitir que diferentes adaptadores manejen aspectos específicos de la infraestructura, como la distribución de cargas o la gestión de múltiples bases de datos.
+
+**¿Cuándo usar hexagonal?**
+- Manejar grandes volúmenes de datos
+- Escalar la aplicación horizontalmente, se pueden agregar más máquinas para mejorar procesamiento
+- Integrar con múltiples sistemas externos, gracias a los puertos y adaptadores
+- Probar la aplicación exhaustivamente
+
+# Layered vs Hexagonal
+
+![picture 14](./images/hexagonal_vs_layered.png)
+
+4. ***Arquitectura Cliente/Servidor***
+Variantes:
+![picture 15](./images/variantes_client_server.png)
+
 
 *Sección preguntas:*
 - Elija tres patrones arquitectónicos asociados a la vista de ejecución (runtime), y para cada uno de ellos explique su propósito y elija un caso para ejemplificar donde se justifica su aplicación.
