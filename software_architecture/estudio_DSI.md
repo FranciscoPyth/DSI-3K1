@@ -192,6 +192,7 @@ Falacias:
 
 1. ***Arquitectura monolítica***
 
+
 2. ***Arquitectura de microservicios***
 
 2. ***Arquitectura Layered o Estratificada***
@@ -216,7 +217,6 @@ Los sistemas que siguen este patrón arquitectónico suelen ser **fáciles de de
 Algunas de las contras que presenta, es al momento de la ejecución del sistema, este puedo tener problemas relacionados a la **performance y disponibilidad** ante la caída o la falla de conexión en alguno de los servidores o la red de wifi o conexión utilizada, recordemos que cada capa va a deployarse en un servidor particular, y estos servidores a su vez, se comunican mediante peticiones HTTP y de red para obtener la información solicitada entre cada capa. El **despliegue** de la aplicación se torna un tanto complicado, ya que se requiere deployar de abajo hacia arriba, esto se debe a que cada capa le solicita información a la capa adyacente que tiene debajo de ella, esto también provoca que **no sea tolerante a los fallos**, ya que si falla una capa inferior, todas las superiores también van a a fallar, debido a que dependen de los servicios que la capa de abajo les provee. Y por último la **escalabilidad** también es un factor que juega en contra, ya que a medida que crece la aplicación, tiende a ser más monolítica y ser todo un bloque de procesamiento, que si se cae una parte, se cae todo el procesamiento y por consecuencia el sistema.
 
 ![picture 10](./images/interaction_layered.png)
-![picture 12](./images/interaction_layered.png)
 
 Ejemplos de variantes de Layered:
 ![picture 13](./images/variants_of_layered.png)
@@ -252,9 +252,66 @@ Existe en este estilo arquitectónico, un principio de diseño aplicado, denomin
 
 ![picture 14](./images/hexagonal_vs_layered.png)
 
-4. ***Arquitectura Cliente/Servidor***
+4. ***Arquitectura Cliente/Servidor N-Tier***
 Variantes:
 ![picture 15](./images/variantes_client_server.png)
+
+Es uno de los estilos arquitectónicos más conocidos, se encuentra compuesto por un proveedor y un consumidor. Puede existir un servidor y multiples clientes que consumen de los servicios, el servidor realiza todo el trabajo pesado. Es un tipo de sistema distribuido ya que se pueden desplegar en distintos servidores. Actúa bajo la idea de una arquitectura monolítica. La comunicación entre capas, se realizan mediante protocolos de comunicación IP/TCP
+
+Características:
+- Este estilo se distingue por que siempre existe una aplicación que es un cliente y otra aplicación que actúa como servidor y el cliente es siempre el que inicia la conexión con el servidor.
+- Requieren una conexión activa todo el tiempo que estén trabajando.
+- Este estilo permite que los componentes estén montados en equipos diferentes, incluso, fuera de la red local y accedido por medio de Internet.
+- El cliente y el servidor pueden evolucionar a velocidades diferentes y ser desarrollados por equipos y tecnologías diferentes.
+
+5. **Peer to peer (P2P)**
+
+6. **Service-Oriented Architecture (SOA)**
+
+7. **Event Driven Architecture (EDA)**
+Es una arquitectura pensada para el asíncronismo y la distribución del procesamiento del sistema, pensada para crear aplicaciones altamente escalables. Los componentes de esta arquitectura no se comunican de forma tradicional, sino que lo hacen através de eventos. Mediante estos eventos que se ejecutan, hace que otros componentes reaccionen a estos, permitiendo incluso que efectúen nuevos eventos. "Evento" es un cambio de estado significativo de la aplicación.
+    ![pict 20](./images/eda_arq.png)
+Esta arquitectura se caracteriza por el asincronismo de las transacciones, busca un bajo acomplamiento entre componentes, por esto implementa un mediador o un event bus, quien se encarga de procesar todos los eventos y esperar a los componentes relacionados que soliciten escuchar el evento para lograr procesarlos. Los event processing no son más que componentes de negocio que están a la escucha de nuevos eventos, estos son los encargados de efectuar acciones post recibir el evento, el proceso o la accion realizada por estos, puede terminar de forma pasiva o provocar/instanciar otro evento que de inicio nuevamente a todo el proceso comentado anteriormente. Cada uno de estos componentes, conoce sólo sus actividades y no sabe de la existencia de los otros event processing, lo cual permite que trabajen de forma autónoma. En estas arquitecturas se busca un mediador o un event bus que permita desacoplar los componentes y que no estén tan relacionados entre sí, evitando que cuando llegue un evento y deba ser recibido por el componente B, en caso de no estar funcionando este componente, la aplicación no provoque un fallo por no encontrar disponible el componente B. Aquí aparecen los MOM (Message-Oriented-Middleware) como apache kafka, que son aplicaciones intermediarias que permiten el transporte de mensajeria de forma segura.
+- Existen dos topologías, a continuación veremos:
+
+    - *Cabe aclara que todas estas variantes de EDA son elementos que aplican en la vista de ejecución...*
+    - **Publish and Suscribe**
+        Se implementa cuando hay un evento que hace que cambie el estado de un determinado publicante. Consiste en componentes independientes que publican eventos y otros que se suscriben a estos.
+        Genera un bajo acoplamiento ya que los publicantes no conocen a quién va dirigido el mensaje y los suscriptores no conocen por parte de qué publicante se envía el mensaje.
+        Los publicantes ignoran el motivo global por el cual el evento es publicado, los suscriptores ignoran porque o quien publica el evento y dependen sólo del evento no de quien lo publica.
+        Cada tópico puede tener más de un publicante y los publicantes pueden aparecer y desaparecer dinámicamente, lo que le da flexibilidad sobre configuraciones estáticas.
+
+        Propiedades claves:
+        1. Mensajería Muchos a muchos: los mensajes publicados son enviados a todos los subscriptores que están registrados en el tópico. Muchos publicantes pueden publicar en el mismo tópico, y muchos suscriptores pueden escuchar en el mismo tópico.
+        2. Calidad de Servicio (QoS) Configurable: Además de mensajes seguros/no seguros, el mecanismo de comunicación subyacentes puede ser punto-a-punto o multicast/broadcast. El primero un mensaje distinto para cada suscriptor del tópico, el último manda un mensaje que todo suscriptor recibe.
+        3. Bajo acoplamiento: No hay vínculo directo entre publicantes y suscriptores. Los publicantes no saben quien recibe su mensaje y los suscriptores no saben que publicante envía el mensaje.
+
+        ![picture 18](./images/publish_and_suscribe.png)
+        ![picture 19](./images/pub_sub.png)
+
+    - **Broker**
+        Se encarga de transformar un evento de llegada en una entrada que el sistema pueda leer y sea capaz de interpretar. Son agentes encargados de recibir mensajes que requieren grandes transformaciones, para luego ser procesados por el componente adecuado, es decir, actúa como un intermediario entre dos componentes, en donde se requiere un transformación entre el mensaje que manda un componente y de la forma en que se recibe en el otro componente. Se utiliza mucho en donde existen problemas de compatibilidad.
+
+        ¿Cuándo usarlo?
+        Como mencionamos antes, se utiliza cuando se requiere transformar de forma dignificativa un mensaje para ser compatible entre los componentes que se comunican mediante este mensaje, entre formato de origen y destino. Ej: Lector qr o código de barras, de impresoras fiscales o de sistemas externos.
+
+        Ventajas
+        El agente se encarga de desacoplar al emisor del receptor, reduciendo el acoplamiento entre ellos, centraliza toda la lógica en el agente para que cada componente se despreocupe de la transformación del mensaje para poder procesarlo.
+
+        ![picture 22](./images/eda_arq_broker.png)
+
+    - **Messaging**
+        Esta arquitectura al igual que las anteriores busca disminuir el acoplamiento entre el receptor y el emisor, colocando una cola de mensajes intermedia, que permite mantener los mensajes hasta el momento en que deban ser enviado al receptor, permite acumular peticiones que serán entregadas en algún momento, esto permite que aunque se encuentre caída la red o el servidor, el mensaje se mantendrá en la cola, hasta que el SW esté disponible. Se caracteriza este patrón por la comunicación asíncrona mediante la cola intermedia, el bajo acoplamiento que aporta la misma y la calidad de servicio configurable (QoS) que permite ajustar y modificar ciertos parametros para mejorar esta cola.
+
+        ![picture 23](./images/eda_messaging.png)
+        ![picture 24](./images/foda_messaging.png)
+
+    - **Process Coordinator**
+        El propósito de este patrón es ubicar en un solo componente de software 'coordinador de proceso' la responsabilidad de manejar la lógica de un proceso de negocio complejo. Se refiere a aquellos procesos que se deben comunicar con muchos servidores externos y mandar mensajes a estos mismos. Busca un mejor encapsulamiento, más fácil de cambiar, administrar y mejorar la performance, bajo acoplamiento ya que los servidores no se comunican entre sí, ya que está el componente que actúa de intermediario, se configura un sólo lugar para administrar todas estas conexiones y relaciones.
+        Una contra es que el coordinador de proceso se puede convertir en un cuello de botella, debido a que puede acumular muchas peticiones y relentizar las respuestas que debe dar. Esto puede ser un factor que degrada la performance.
+
+        ![picture 25](./images/eda_processcoordinator_draw.png)
+        ![picture 26](./images/eda_processcoordinator.png)
 
 
 *Sección preguntas:*
@@ -262,7 +319,8 @@ Variantes:
 - Realizar para cada patrón arquitectónico, un cuadro con las sigientes filas: Descripción - Cuando se usa - Ventajas - Desventajas
 
 ## Arquitectura Microservicios vs Monolíticos
-
+![picture 16](./images/microservies_vs_monolithic_1.jpeg)
+![picture 17](./images/monolithic_vsmicroservices.png)
 
 ## Patrones de microservicios
 
@@ -270,5 +328,5 @@ Variantes:
 2. Una base de datos por cada Servicio
 3. API Gateway
 4. 
-5. 
-6. 
+5. Single service per host
+6. Multiple service per host
