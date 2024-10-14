@@ -17,28 +17,30 @@
 
 > Estos conceptos no sólo se tratan y trabajan para los componentes, sino que también se utilizan en todo el desarrollo general. Ayudando a tener un sistema más mantenible y ordenado.
 
+---
+
 ### Principios de diseño para POO
 > A nivel laboral estos conceptos se suelen preguntar mucho en las entrevistas
 1. **SOLID**
     - **Single Responsability**:
     Apunta a que una clase debería tener una única responsabilidad global, asociado al concepto que la clase modela. *Única responsabilidad + Única razón para cambiar = Alta cohesión*
     ![image](./images/single_responsability_robots.png)
-    > Véase ejemplo de auto e intentar realizar un ejemplo propio
+        > Véase ejemplo de auto e intentar realizar un ejemplo propio
     - **Open/Closed = Encapsular lo que varía**:
     Abierto para extensión, significa que la clase no se hará más grande cuando necesitamos agregarle funcionalidad, sino que se pueden crear más clases para ampliarla. *Permitir el cambio + No modificar lo existente = Flexibilidad* // *Separar lo que cambia + Ubicarlo en otra clase = Maneja la variabilidad*
     ![image](./images/open_closed_robots.png)
-    > Véase ejemplo de pintor e intentar realizar un ejemplo propio
+        > Véase ejemplo de pintor e intentar realizar un ejemplo propio
     - **Liskov Sustitution**:
     Es un principio que ayuda a determinar si una herencia se encuentra bien aplicada o no. La gran pregunta es si: ***¿El hijo se comporta como el padre en caso de intercambiarlos?*** (es una prueba conceptual, en donde tomamos los métodos del padre y los aplicamos en el hijo, en caso de no funcionar, la herencia estará mal implementada). *Tipos sustituibles por sus tipos Base (clase abstracta) + Revela problemas de estructura si existieran = Herencia bien diseñada*
     ![image](./images/liskov_robots.png)
-    > Véase ejemplo de persona e intentar realizar un ejemplo propio
+        > Véase ejemplo de persona e intentar realizar un ejemplo propio
     - **Interface Segregation**:
     Permite no romper encapsulamiento y puede implementar comportamiento de n interfaces (característica que mejora a comparación de la herencia, que no todos los lenguajes de programación permiten herencia múltiple), busca no obligar a las clases concretas a implementar comportamiento que no necesitan. Al aplicar este principio, se crean más interfaces que permiten aumentar su cohesión. *No obligar a los clientes a depender de métodos que no utilizan + No obligar a las clases a implementar interfaces que no necesitan = Bajo acoplamiento, facilidad de implementación y prueba*
     ![image](./images/interface_robots.png)
     - **Dependecy Inversion**:
     Parte de que no está tan bueno que las capas más altas (módulos de alto nivel) dependan mucho de las inferiores (módulo de bajo nivel). Este principio invierte la relación en la herencia, en una herencia común el hijo busca del padre todos los métodos que el padre tiene definidos, en este principio se propone lo inverso, que el padre invoque/llame a un método que se encuentra en la clase hijo. Resuelve problema de dependencia, favoreciendo la cohesión y el bajo acomplamiento. *Los módulos de alto nivel no deben depender de los módulos de menor nivel + Ambos deben depender de sus abstracciones + Las abstracciones no deben depender de los detalles = Flexibilidad, robustez y movilidad*
     ![image](./images/dependency_inversion_robots.png)
-    > En persistencia se ve más a fondo este tema y se aplica de forma más clara. Se lo puede conocer como *principio Hollywood "No me llames, yo te llamo"*
+        > En persistencia se ve más a fondo este tema y se aplica de forma más clara. Se lo puede conocer como *principio Hollywood "No me llames, yo te llamo"*
 
 2. **DRY (Don't Repeat Yourself)**
 Su propósito es evitar duplicaciones, si se requiere duplicar algo, creamos abstracciones en busca de esto, es decir:
@@ -62,23 +64,40 @@ No está bueno que sólo la clase de control se encargue de hacer todo, y que la
 
 7. **Program to Interface**
 
+---
 
-### Design Patterns
+## Design Patterns
 
-## STRATEGY
+### Singleton
+Singleton es un patrón de diseño creacional que nos permite asegurarnos de que una clase tenga una única instancia, a la vez que proporciona un punto de acceso global a dicha instancia. El problema que resuelve afecta directamente con el principio de Single Responsability (**S**OLID).
+
+> 📝 **Nota:** Se recomienda utilizar el patrón Singleton cuando una clase de tu programa tan solo deba tener una instancia disponible para todos los clientes; por ejemplo, un único objeto de base de datos compartido por distintas partes del programa.
 
 
-## STATE aplicado
+### Adapter
+
+### Iterator
+
+### Observer
+
+### Template Method
+
+### Strategy
+
+
+### State 
+
+#### Aplicación en caso práctico
 Este patrón se aplica mirando la máquina de estados, a partir de esta podemos determinar los estados que van a formar parte del rediseño mediante este patrón, por ejemplo, en la vista de **estructura**, se formarán nuevas clases que *heredan comportamiento* de la clase abstracta *estado* (clase padre), por otro lado, para el caso de la vista dinámica con el diagrama de secuencias, es el punto que más nos puede traer dificultades, ya que debemos ver lo métodos que están instanciados en la máq de estados pero también tenemos que tener algunas consideraciones al momento de rediseñar nuestro diagrama aplicando el nuevo patrón. Este patrón también sigue el principio de programar hacia la interfaz (siendo esta mucho más reutilizable)
 A continuación iremos paso a paso:
 
-## Diagrama de Máquina de Estados
+##### Diagrama de Máquina de Estados
 ![image](./images/maq_estados_state_frigo.png)
 
-## Diagrama de Clases (estructura)
+##### Diagrama de Clases (estructura)
 ![image](./images/estructura_state_frigo.png)
 
-## Diagrama de Secuencia (dinámico)
+##### Diagrama de Secuencia (dinámico)
 ![image](./images/secuencia_original_frigo.png)
 ![image](./images/state_frigo.png)
 
@@ -97,3 +116,6 @@ En este caso, se plantea en el diagrama de secuencia la implementación del patr
 - Generalización = Herencia
 - Realización = Interfaces
 - Un principio es una declaración de que algo se debe hacer de una determinada manera, los patrones en cambio, son lo que especifican más el contexto y el problema + solución.
+
+### Bibliografía
+[Refactoring Guru](https://refactoring.guru/es/design-patterns)
